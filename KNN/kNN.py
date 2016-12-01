@@ -90,3 +90,15 @@ if __name__ == "__main__":
     print normDataSet
     print ranges
     print minVals
+
+def file2matrix(filename):
+    fr = open(filename)
+    arrayLines = fr.readlines()
+    numberOfLines = len(arrayLines)
+    returnMat = zeros((numberOfLines,3))
+    print returnMat
+
+
+if __name__ == "__main__":
+    group, labels = createDataSet()
+    print classify0([0, 0], group, labels, 3)
