@@ -83,7 +83,8 @@ def majorityCnt(classList):
         sortedClassCount = sorted(classCount.iteritems(),key=operator.itemgetter(1),reverse=True)
     return sortedClassCount[0][0]
 
-
+def createTree():
+    pass
 
 if __name__ == "__main__":
     dataSet = createDataSet()
