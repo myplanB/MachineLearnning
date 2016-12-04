@@ -2,6 +2,8 @@
 
 from math import log
 import operator
+import matplotlib.pyplot as plt
+
 
 # 创建数据集和标签列表
 def createDataSet():
@@ -104,19 +106,58 @@ def createTree(dataSet, labels):
     bestFeat = chooseBestFeatureToSplit(dataSet)
     # 选取最好的特征标签值
     bestFeatLabel = labels[bestFeat]
-    myTree = {bestFeatLabel:{}}
-    del(labels[bestFeat])
+    myTree = {bestFeatLabel: {}}
+    # 删除最佳特征标签
+    del (labels[bestFeat])
     featValues = [example[bestFeat] for example in dataSet]
     uniqueVals = set(featValues)
     for value in uniqueVals:
         subLabels = labels[:]
         # 递归调用计算子树
-        myTree[bestFeatLabel][value] = createTree(splitDataSet(dataSet,bestFeat,value),subLabels)
+        myTree[bestFeatLabel][value] = createTree(splitDataSet(dataSet, bestFeat, value), subLabels)
     return myTree
 
 
+# 首先选择根节点，然后遍历子节点，计算叶节点个数
+def getNumLeaf(mytree):
+    numLeafs = 0
+    # 获取根节点
+    rootStr = mytree.keys()[0]
+    # 获取子节点
+    childDict = mytree[rootStr]
+    for key in childDict.keys():
+        if type(childDict[key]).__name__ == 'dict':
+            numLeafs += getNumLeaf(childDict[key])
+        else:
+            numLeafs += 1
+    return numLeafs
+
+
+# 首先选择根节点，然后遍历子节点，计算树的深度
+def getTreeDepth(mytree):
+    maxDepth = 0
+    # 获取根节点
+    rootStr = mytree.keys()[0]
+    # 子节点
+    childDict = mytree[rootStr]
+    for key in childDict.keys():
+        if type(childDict[key]).__name__ == 'dict':
+            currentDepth = 1 + getTreeDepth(childDict[key])
+        else:
+            currentDepth = 1
+        if currentDepth > maxDepth:
+            maxDepth = currentDepth
+    return maxDepth
+
+
 if __name__ == "__main__":
-    dataSet, labels = createDataSet()
+    # dataSet, labels = createDataSet()
     # print calcShannonEnt(dataSet)
     # print chooseBestFeatureToSplit(dataSet)
-    print createTree(dataSet, labels)
+    # str = {'no surfacing': {0: 'no', 1: {'flippers': {0: 'no', 1: 'yes'}}}}
+    # print createTree(dataSet,labels)
+    fr = open('lenses.txt')
+    lenses = [inst.strip().split("++") for inst in fr.readlines()]
+    labels = ['age','prescript','astgmatic','tearRate']
+    lensesTree = createTree(lenses,labels)
+    print lensesTree
