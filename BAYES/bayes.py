@@ -1,5 +1,5 @@
 # encoding:utf-8
-from numpy import zeros
+from numpy import zeros, log, array
 
 
 def loadDataSet():
@@ -58,17 +58,36 @@ def trainNBO(trainMatrix, trainCategory):
     return p0Vect, p1Vect, pAbusive
 
 
+def classifyNB(vec2Classify, p0Vec, p1Vec, pClass1):
+    p1 = sum(vec2Classify * p1Vec) + log(pClass1)
+    p0 = sum(vec2Classify * p0Vec) + log(1.0 - pClass1)
+    if p1 > p0:
+        return 1
+    else:
+        return 0
+
+# 分为两组测试
+def testingNB():
+    listOfPost,listClasses = loadDataSet()
+    myVocabList = createVocabList(listOfPost)
+    trainMat=[]
+    for postinDoc in listOfPost:
+        trainMat.append(setOfWords2Vec(myVocabList,postinDoc))
+    p0v,p1v,pAb = trainNBO(array(trainMat),array(listClasses))
+    testEntry = ['love','my','dalmation']
+    thisDoc = array(setOfWords2Vec(myVocabList,testEntry))
+    print testEntry,'classified as:',classifyNB(thisDoc,p0v,p1v,pAb)
+    testEntry = ['stupid','garbage']
+    thisDoc = array(setOfWords2Vec(myVocabList,testEntry))
+    print testEntry,'classified as:',classifyNB(thisDoc,p0v,p1v,pAb)
+
 if __name__ == "__main__":
-    trainMat = []
-    dataSet, classVec = loadDataSet()
-    # 去重数据
-    uniqueData = createVocabList(dataSet)
-    for doc in dataSet:
-        # 数值化数据数组
-        trainMat.append(setOfWords2Vec(uniqueData, doc))
-    p0Vect, p1Vect, pAbusive = trainNBO(trainMat, classVec)
-    print p0Vect
-    print "\n"
-    print p1Vect
-    print "\n"
-    print pAbusive
+    # trainMat = []
+    # dataSet, classVec = loadDataSet()
+    # # 去重数据
+    # uniqueData = createVocabList(dataSet)
+    # for doc in dataSet:
+    #     # 数值化数据数组
+    #     trainMat.append(setOfWords2Vec(uniqueData, doc))
+    # p0Vect, p1Vect, pAbusive = trainNBO(trainMat, classVec)
+    testingNB()
