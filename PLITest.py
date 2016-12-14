@@ -1,31 +1,24 @@
-from PIL import Image
-import os
+def TestPrint():
+    name = "hello"
+    age = "world"
+    print "{0}-{1}".format(name, age)
 
-pil_im = Image.open("lena.jpg")
-# pil_im.show()
-#
-# for infile in filelist:
-#     outfile = os.path.splitext(infile)[0]+".jpg"
-#     if infile != outfile:
-#         try:
-#             Image.open(infile).save(outfile)
-#         except IOError:
-#             print "can not convert "+infile
 
-#
-# pil_im.thumbnail((128,128))
-# pil_im.show()
+def TestException():
+    try:
+        print "hello world!"
+    except OSError:
+        print "OS error {0}".format(OSError)
 
-# box = (100,100,400,400)
-# region = pil_im.crop(box)
-# region.show()
-#
-# region = region.transpose(Image.ROTATE_180)
-# pil_im.paste(region,box)
-# pil_im.show()
+def add_candles(cake_func):
+    def insert_candles():
+        return cake_func() + " and Candles"
+    return insert_candles()
 
-# out = pil_im.resize((128,128))
-# out.show()
+@add_candles
+def make_cake():
+    return "cake"
 
-out = pil_im.rotate(90)
-out.show()
+
+if __name__ == "__main__":
+    print (make_cake)
