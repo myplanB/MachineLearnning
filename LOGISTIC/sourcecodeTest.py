@@ -1,51 +1,49 @@
-# encoding:utf-8
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+# @Time    : 2016/12/15 10:22
+# @Author  : sonny
+# @Site    : 
+# @File    : sourcecodeTest.py
+# @Software: PyCharm
 
 from numpy import *
 import matplotlib.pyplot as plt
 
-
-# 载入数据
 def loadDataSet():
-    dataMat = []
+    dataMat = [];
     labelMat = []
     fr = open('testSet.txt')
     for line in fr.readlines():
-        lineArr = line.strip().split("\t")
+        lineArr = line.strip().split()
         dataMat.append([1.0, float(lineArr[0]), float(lineArr[1])])
-        labelMat.append(int(lineArr[-1]))
+        labelMat.append(int(lineArr[2]))
     return dataMat, labelMat
 
 
-# sigmod 函数
-def sigmod(inX):
+def sigmoid(inX):
     return 1.0 / (1 + exp(-inX))
 
 
-# 梯度下降
-def gradAscent(dataMatIn, classlabels):
-    # 转换成矩阵
-    dataMatrix = mat(dataMatIn)
-    # 矩阵转置 labelMat -> classlabels 100*1
-    labelMat = mat(classlabels).transpose()
+def gradAscent(dataMatIn, classLabels):
+    dataMatrix = mat(dataMatIn)  # convert to NumPy matrix
+    labelMat = mat(classLabels).transpose()  # convert to NumPy matrix
     m, n = shape(dataMatrix)
     alpha = 0.001
     maxCycles = 500
-    # 创建单位阵
     weights = ones((n, 1))
-    for k in range(maxCycles):
-        # 矩阵内个元素运算 dataMatrix 100*3 weights 3*1 -> h 100*1
-        h = sigmod(dataMatrix * weights)
-        error = (labelMat - h)
-        weights += alpha * dataMatrix.transpose() * error
+    for k in range(maxCycles):  # heavy on matrix operations
+        h = sigmoid(dataMatrix * weights)  # matrix mult
+        error = (labelMat - h)  # vector subtraction
+        weights += alpha * dataMatrix.transpose() * error  # matrix mult
     return weights
 
 
-# 绘制决策边界
-def plotBestFit(wei):
-    # 加载数据
+def plotBestFit(weights):
+
     dataMat, labelMat = loadDataSet()
-    #
+    # 将二维列表list(list)-> 转换成二维数组 array(array)
     dataArr = array(dataMat)
+    # 获取行数
     n = shape(dataArr)[0]
     xcord1 = []
     ycord1 = []
@@ -62,15 +60,12 @@ def plotBestFit(wei):
     ax = fig.add_subplot(111)
     ax.scatter(xcord1, ycord1, s=30, c='red', marker='s')
     ax.scatter(xcord2, ycord2, s=30, c='green')
-    #arange return list
     x = arange(-3.0, 3.0, 0.1)
     y = (-weights[0] - weights[1] * x) / weights[2]
     ax.plot(x, y)
     plt.xlabel('X1')
     plt.ylabel('X2')
-    plt.grid
     plt.show()
-
 
 if __name__ == "__main__":
     dataMat, labelMat = loadDataSet()

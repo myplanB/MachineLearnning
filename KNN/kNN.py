@@ -23,7 +23,7 @@ def classify0(inX, dataSet, labels, k):
     # 残差矩阵
     diffMat = tile(inX, (dataSetSize, 1)) - dataSet
     sqDiffMat = diffMat ** 2
-    # 按行求和
+    # 矩阵按行求和
     sqDistances = sqDiffMat.sum(axis=1)
     # 取平方
     distances = sqDistances ** 0.5
