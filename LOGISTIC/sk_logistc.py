@@ -28,7 +28,9 @@ def gradientDescent(x,y,thera,alpha,m,numIterations):
         # cost函数
         cost = np.sum(loss**2)/(2*m)
         print ("Iteration %d| Cost: %f" % (i,cost))
-        gradient = np.dot(xTrans,loss)/m
+
+        # 梯度下降核心
+        gradient = np.dot(xTrans,loss)/ m
         thera = thera - alpha * gradient
     return thera
 
@@ -40,7 +42,7 @@ def loadData(numPoints,bias,variance):
     x = np.zeros(shape=(numPoints,2))
     # 生成 numPoints 行 1列的二维数组
     y = np.zeros(shape=numPoints)
-    for i in xrange(1,numPoints):
+    for i in xrange(0,numPoints):
         x[i][0] = 1
         x[i][1] = i
         # uniform 指定范围的随机数
@@ -52,3 +54,14 @@ if __name__=="__main__":
     m,n = np.shape(x)
     print m
     print n
+
+    numIterations = 100000
+    alpha = 0.0005
+    theta = np.ones(n)
+    theta = gradientDescent(x,y,theta,alpha,m,numIterations)
+    print theta
+
+#思路：
+# 第一步：先生成模拟数据，行数相同
+
+# 第二步：
