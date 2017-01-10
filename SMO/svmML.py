@@ -29,3 +29,4 @@ def clipAlpha(aj,H,L):
 
 if __name__ == "__main__":
     dataMat, labelMat = loadData("testSet.txt")
+    print dataMat

@@ -7,38 +7,20 @@
 # @Software: PyCharm
 import urllib2
 import urllib
-from lxml import tree
 
-class getObject():
-    price = 0.0
-    store = ""
-    category = ""
-    dealSize = 0
-    commentSize = ""
-    link = ""
-
-    def __init__(self, price, store, category, dealSize, commentSize,link):
-        self.price = price
-        self.store = store
-        self.category = category
-        self.dealSize = dealSize
-        self.commentSize = commentSize
-        self.link = link
-
-
-def showCompleteUrl(num):
-    num = -1 + 60 * num
-    baseUrl = "https://list.tmall.com/"
-    compeleteUrl = baseUrl + "search_product.htm?spm=a220m.1000858.0.0.dEqp2T&cat=50025983&s={0}&q=%D0%D8%D5%D6&sort=s&style=g&from=mallfp..pc_1_suggest&suggest=0_1&type=pc#J_Filter".format(num)
-    return compeleteUrl
-
-
-def getURL():
-    values = ["username"]
-    response = urllib2.urlopen("http://mail.163.com")
-    print response.read()
-
+def download(url,user_agent='wswp',num_retries=2):
+	print "正在下载网页：\n"
+	headers = {'User-agent':user_agent}
+	request = urllib2.Request(url,headers=headers)
+	try:
+		html = urllib2.urlopen(request).read()
+	except urllib2.URLError as e:
+		print "下载失败：",e.reason
+		html = ""
+		if num_retries > 0:
+			if hasattr(e,'code') and 500 <= e.code < 600:
+				return download(url,user_agent,num_retries-1)
+	return html
 
 if __name__ == "__main__":
-    for i in range(0, 100):
-        print showCompleteUrl(i)
+	print download("http://www.taobao.com")

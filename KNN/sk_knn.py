@@ -61,3 +61,4 @@ def getResponse(neighbors):
 
 if __name__ == "__main__":
     trainingSet, testSet = loadDataSet("irisdata.txt", ",")
+    print trainingSet
