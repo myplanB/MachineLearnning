@@ -160,4 +160,4 @@ if __name__ == "__main__":
     lenses = [inst.strip().split("++") for inst in fr.readlines()]
     labels = ['age','prescript','astgmatic','tearRate']
     lensesTree = createTree(lenses,labels)
-    print lensesTree
+    print(lensesTree)
