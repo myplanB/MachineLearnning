@@ -96,7 +96,7 @@ def majorityCnt(classList):
 def createTree(dataSet, labels):
     # 结果列表
     classList = [example[-1] for example in dataSet]
-    # count 用于统计某个元素在列表中出现的次数，如果分类列表的长度与列表中第一个元素在列表中出现次数相等
+    # count 用于统计某个元素在列表中出现的次数，如果分类列表的长度与列表中第一个元素在列表中出现次数相等,返回第一个类
     if classList.count(classList[0]) == len(classList):
         return classList[0]
     if len(dataSet[0]) == 1:

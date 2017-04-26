@@ -10,7 +10,7 @@ def createDataSet():
     group = array([
         [1.0, 1.1],
         [1.0, 1.0],
-        [0, 0],# -*- coding: utf-8 -*-
+        [0, 0],  # -*- coding: utf-8 -*-
         [0, 0.1]
     ])
     labels = ['A', 'A', 'B', 'B']
@@ -69,15 +69,16 @@ def autoNorm(dataSet):
     normDataSet = normDataSet / tile(ranges, (m, 1))
     return normDataSet, ranges, minVals
 
+
 def datingClassTest():
     hoRatio = 0.10
-    datingDataMat,datingLabels = file2matrix("datingTestSet2.txt")
-    normMat,ranges,minVals = autoNorm(datingDataMat)
+    datingDataMat, datingLabels = file2matrix("datingTestSet2.txt")
+    normMat, ranges, minVals = autoNorm(datingDataMat)
     m = normMat.shape[0]
-    numTestVercs = int(m*hoRatio)
+    numTestVercs = int(m * hoRatio)
     errorCount = 0.0
     for i in range(numTestVercs):
-        classifierResult = classify0(normMat[i,:],normMat[numTestVercs:m,:],datingLabels[numTestVercs:m,:],3)
+        classifierResult = classify0(normMat[i, :], normMat[numTestVercs:m, :], datingLabels[numTestVercs:m, :], 3)
 
 
 if __name__ == "__main__":
@@ -87,18 +88,19 @@ if __name__ == "__main__":
     # ax.scatter(datingDataMat[:,1],datingDataMat[:,2])
     # plt.show()
     normDataSet, ranges, minVals = autoNorm(datingDataMat)
-    print normDataSet
-    print ranges
-    print minVals
+    print(normDataSet)
+    print(ranges)
+    print(minVals)
+
 
 def file2matrix(filename):
     fr = open(filename)
     arrayLines = fr.readlines()
     numberOfLines = len(arrayLines)
-    returnMat = zeros((numberOfLines,3))
-    print returnMat
+    returnMat = zeros((numberOfLines, 3))
+    print(returnMat)
 
 
 if __name__ == "__main__":
     group, labels = createDataSet()
-    print classify0([0, 0], group, labels, 3)
+    print(classify0([0, 0], group, labels, 3))
