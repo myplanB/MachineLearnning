@@ -17,3 +17,4 @@ clf.fit(X,Y)
 import pickle
 s = pickle.dumps(clf)
 clf2 = pickle.loads(s)
+print clf2

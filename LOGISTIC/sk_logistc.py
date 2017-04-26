@@ -11,57 +11,50 @@
 @file: sk_logistc.py
 @time: 2016/12/13 22:26
 """
-import numpy as np
-import random
+import csv
+from IPython.display import Image
+import pydotplus
+from sklearn import preprocessing, tree
+from sklearn.feature_extraction import DictVectorizer
 
-# x,y 为
-# m 为向量个数
-def gradientDescent(x,y,thera,alpha,m,numIterations):
-    # 转置
-    xTrans = x.transpose()
-    # 迭代次数
-    for i in xrange(0,numIterations):
-        # 参数模型
-        hypothesis = np.dot(x,thera)
-        # 残差
-        loss = hypothesis - y
-        # cost函数
-        cost = np.sum(loss**2)/(2*m)
-        print ("Iteration %d| Cost: %f" % (i,cost))
+if __name__ == '__main__':
+    allElectronicsData = open("AllElectronics.csv")
+    reader = csv.reader(allElectronicsData)
+    # 获取表格的表头
+    headers = reader.next()
+    print headers
 
-        # 梯度下降核心
-        gradient = np.dot(xTrans,loss)/ m
-        thera = thera - alpha * gradient
-    return thera
+    # 特征列表
+    featureList = []
+    # 标签列表
+    labelList = []
 
-# numPoints   实例数
-# bias        偏好值
-# variance    方差
-def loadData(numPoints,bias,variance):
-    # 生成numPoints 行 2列的二维数组
-    x = np.zeros(shape=(numPoints,2))
-    # 生成 numPoints 行 1列的二维数组
-    y = np.zeros(shape=numPoints)
-    for i in xrange(0,numPoints):
-        x[i][0] = 1
-        x[i][1] = i
-        # uniform 指定范围的随机数
-        y[i] = (i+bias) + random.uniform(0,1)*variance
-    return x,y
+    for row in reader:
+        # 标签元素存储标签列表
+        labelList.append(row[-1])
+        rowDict = {}
+        for i in range(1,len(row)-1):
+            print row[i]
+            rowDict[headers[i]] = row[i]
+        featureList.append(rowDict)
+    print "featureList:{0}".format(featureList)
+    print "labelList:{0}".format(labelList)
 
-if __name__=="__main__":
-    x,y = loadData(100, 25, 10)
-    m,n = np.shape(x)
-    print m
-    print n
+    vec = DictVectorizer()
+    # 转换成矩阵
+    dummyX = vec.fit_transform(featureList).toarray()
+    print "dummyX:{0}".format(dummyX)
+    print vec.get_feature_names()
 
-    numIterations = 100000
-    alpha = 0.0005
-    theta = np.ones(n)
-    theta = gradientDescent(x,y,theta,alpha,m,numIterations)
-    print theta
+    # 转换成二进制标签化
+    lb = preprocessing.LabelBinarizer()
+    dummyY = lb.fit_transform(labelList)
+    print "dummyY:{0}".format(dummyY)
 
-#思路：
-# 第一步：先生成模拟数据，行数相同
+    clf = tree.DecisionTreeClassifier(criterion='entropy')
+    clf = clf.fit(dummyX,dummyY)
+    print "clf:"+str(clf)
 
-# 第二步：
+    with open("iris.dot", 'w') as f:
+        f = tree.export_graphviz(clf, out_file=f)
+
