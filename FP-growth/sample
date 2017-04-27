@@ -1,0 +1,11 @@
+freqItemzSet         set(['s', 'r', 't', 'y', 'x', 'z'])
+
+headerTable          {'s': [3, None], 'r': [3, None], 't': [3, None], 'y': [3, None], 'x': [4, None], 'z': [5, None]}
+
+tranSet              frozenset(['e', 'm', 'q', 's', 't', 'y', 'x', 'z'])
+
+localID              {'y': 3, 'x': 4, 's': 3, 'z': 5, 't': 3}
+
+orderedItem          <type 'list'>: ['z', 'x', 'y', 's', 't']
+
+[('z', 5), ('x', 4), ('y', 3), ('s', 3), ('t', 3)]
