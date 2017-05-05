@@ -1,4 +1,5 @@
-# encoding:utf-8
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
 
 from numpy import *
 import matplotlib.pyplot as plt
@@ -41,7 +42,7 @@ def gradAscent(dataMatIn, classlabels):
 
 
 # 绘制决策边界
-def plotBestFit(wei):
+def plotBestFit(weights):
     # 加载数据
     dataMat, labelMat = loadDataSet()
     #
