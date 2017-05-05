@@ -45,7 +45,7 @@ if __name__ == "__main__":
     testY = [10,12,24,21,34]
 
     resu = computeCorrelation(testX, testY)
-    print "r:",resu
-    print "r**2",resu**2
+    print ("r:",resu)
+    print ("r**2",resu**2)
 
-    print polyfit(testX, testY, 1)['determination']
+    print (polyfit(testX, testY, 1)['determination'])
