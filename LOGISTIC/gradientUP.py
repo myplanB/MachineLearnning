@@ -28,8 +28,9 @@ def stocGradAscentUp(dataMatrix, classLabels):
     return weights
 
 
-def stocGradAscentRandom(dataMats, classLabels, numIter=50):
-    m, n = shape(dataMats)
+def stocGradAscentRandom(dataMats, classLabels, numIter=1000):
+    # dataMats
+    m, n = shape(mat(dataMats))
     weights = ones(n)
     for j in range(numIter):
         dataIndex = arange(m)
@@ -39,8 +40,6 @@ def stocGradAscentRandom(dataMats, classLabels, numIter=50):
             randIndex = int(random.uniform(0, len(dataIndex)))
             h = sigmod(sum(dataMats[randIndex] * weights))
             error = classLabels[randIndex] - h
-            weights += alpha * error * dataMats[randIndex]
-            # del dataIndex[randIndex]
     return weights
 
 

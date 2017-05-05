@@ -27,12 +27,14 @@ def gradAscent(dataMatIn, classlabels):
     # 转换成矩阵
     dataMatrix = mat(dataMatIn)
     # 矩阵转置 labelMat -> classlabels 100*1
-    labelMat = mat(classlabels).transpose()
+    labelMat = mat(classlabels).transpose()  # 1*100
     m, n = shape(dataMatrix)
     alpha = 0.001
     maxCycles = 500
     # 创建单位阵
     weights = ones((n, 1))
+
+    # 频繁更新weights
     for k in range(maxCycles):
         # 矩阵内个元素运算 dataMatrix 100*3 weights 3*1 -> h 100*1
         h = sigmod(dataMatrix * weights)
