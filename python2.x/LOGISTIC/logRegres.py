@@ -10,7 +10,7 @@
 @file: logRegres.py
 @time: 2017/5/5 16:19
 """
-from LOGISTIC.gradientUP import stocGradAscentUp, stocGradAscentRandom
+from LOGISTIC.gradientUP import stocGradAscentRandom
 from LOGISTIC.logistic import sigmod
 from numpy import *
 
