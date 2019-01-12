@@ -12,3 +12,4 @@ while(True):
     cv2.imshow('frame', gray)
     if cv2.waitKey(1) == ord('q'):
         break
+
