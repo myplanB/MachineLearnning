@@ -7,6 +7,6 @@ cv.namedWindow('input image',cv.WINDOW_AUTOSIZE)
 #在窗口显示图片  
 cv.imshow('input image',src)    
 #等待用户操作  
-cv.waitKey(0)  
+cv.waitKey(100000)
 #释放所有窗口  
 cv.destroyAllWindows()
